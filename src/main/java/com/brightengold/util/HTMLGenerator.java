@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
 import org.apache.commons.httpclient.Cookie;
@@ -16,6 +17,7 @@ import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import cn.rainier.nian.model.User;
 
 /** 静态页面引擎 */
 public class HTMLGenerator extends BaseLog{
@@ -33,7 +35,7 @@ public class HTMLGenerator extends BaseLog{
 		this.webappname = webappname;
 	}
 	
-	public boolean createHtmlPage(String url,String fileName,String username){
+	public boolean createHtmlPage(String url,String fileName,User user){
 		boolean status = false;
 		int statusCode = 0;
 		String loginUrl = webappname+"/j_spring_security_check";
@@ -42,9 +44,9 @@ public class HTMLGenerator extends BaseLog{
 			httpClient = new HttpClient();
 			PostMethod postMethod = new PostMethod(loginUrl);
 			//设置登陆时要求的信息，一般就用户名和密码，验证码自己处理了
-			if(username!=null){
+			if(user!=null){
 				NameValuePair[] data = {
-		                new NameValuePair("j_username", username),
+		                new NameValuePair("j_username", user.getUsername()),
 		                new NameValuePair("j_password", CommonConstants.p)
 		        };
 		        postMethod.setRequestBody(data);

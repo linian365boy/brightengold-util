@@ -51,15 +51,15 @@ public class HTMLGenerator extends BaseLog{
 	        httpClient.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
 	        httpClient.executeMethod(postMethod);
 	        //获得登陆后的 Cookie
-            //Cookie[] cookies=httpClient.getState().getCookies();
-            //String tmpcookies= "";
-	        //for(Cookie c:cookies){
-            //    tmpcookies += c.toString()+";";
-            //}
+            Cookie[] cookies=httpClient.getState().getCookies();
+            String tmpcookies= "";
+	        for(Cookie c:cookies){
+                tmpcookies += c.toString()+";";
+            }
             
 			//get方法实例
 			method = new GetMethod(url);
-			//method.setRequestHeader("cookie",tmpcookies);
+			method.setRequestHeader("cookie",tmpcookies);
 			
 			statusCode = httpClient.executeMethod(method);
 			httpClient.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,"UTF-8");

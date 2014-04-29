@@ -32,7 +32,7 @@ public class HTMLGenerator extends BaseLog{
 		this.webappname = webappname;
 	}
 	
-	public boolean createHtmlPage(String url,String fileName,String username){
+	public boolean createHtmlPage(String url,String fileName,String username,String value){
 		boolean status = false;
 		int statusCode = 0;
 		String loginUrl = webappname+"/admin/j_spring_security_check";
@@ -44,7 +44,7 @@ public class HTMLGenerator extends BaseLog{
 			if(username!=null){
 				NameValuePair[] data = {
 		                new NameValuePair("j_username", username),
-		                new NameValuePair("j_password", CommonConstants.p)
+		                new NameValuePair("j_password", value)
 		        };
 		        postMethod.setRequestBody(data);
 			}
@@ -116,7 +116,7 @@ public class HTMLGenerator extends BaseLog{
 	//测试方法
 	public static void main(String[] args){
 		HTMLGenerator h = new HTMLGenerator("");
-		h.createHtmlPage("http://www.hao123.com","c:/a.html",null);
+		h.createHtmlPage("http://www.hao123.com","c:/a.html",null,null);
 		System.out.println("导出成功！");
 	}
 	

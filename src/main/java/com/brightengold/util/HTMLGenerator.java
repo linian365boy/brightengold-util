@@ -36,10 +36,11 @@ public class HTMLGenerator extends BaseLog{
 		boolean status = false;
 		int statusCode = 0;
 		String loginUrl = webappname+"/admin/j_spring_security_check";
+		PostMethod postMethod = null;
 		try{
 			//创建一个HttpClient实例充当模拟浏览器
 			httpClient = new HttpClient();
-			PostMethod postMethod = new PostMethod(loginUrl);
+			postMethod = new PostMethod(loginUrl);
 			//设置登陆时要求的信息，一般就用户名和密码，验证码自己处理了
 			if(username!=null){
 				NameValuePair[] data = {
@@ -52,14 +53,14 @@ public class HTMLGenerator extends BaseLog{
 	        httpClient.executeMethod(postMethod);
 	        //获得登陆后的 Cookie
             Cookie[] cookies=httpClient.getState().getCookies();
-            String tmpcookies= "";
+            StringBuffer tmpcookies= new StringBuffer();
 	        for(Cookie c:cookies){
-                tmpcookies += c.toString()+";";
+                tmpcookies.append(c.toString()+";");
             }
             
 			//get方法实例
 			method = new GetMethod(url);
-			method.setRequestHeader("cookie",tmpcookies);
+			method.setRequestHeader("cookie",tmpcookies.toString());
 			
 			statusCode = httpClient.executeMethod(method);
 			httpClient.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET,"UTF-8");
@@ -95,6 +96,9 @@ public class HTMLGenerator extends BaseLog{
 			//释放http连接
 			if(method!=null){
 				method.releaseConnection();
+			}
+			if(postMethod!=null){
+				postMethod.releaseConnection();
 			}
 		}
 		return status;

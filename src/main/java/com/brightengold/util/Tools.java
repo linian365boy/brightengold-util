@@ -74,10 +74,12 @@ public class Tools {
     }
     
     public static void main(String[] args) {
-    	String s = "cfcd208495d565ef66e7dff9f98764da";
-		System.out.println(URLEncoder.encode(convertMD5(s)));
+    	//String s = "cfcd208495d565ef66e7dff9f98764da";
+		//System.out.println(URLEncoder.encode(convertMD5(s)));
 		//System.out.println(convertMD5(URLEncoder.encode(convertMD5(s))));
-		System.out.println(URLDecoder.decode(convertMD5(s)));
+		//System.out.println(URLDecoder.decode(convertMD5(s)));
+    	String s = "1";
+    	System.out.println(convertMD5(s));
 	}
     
 }

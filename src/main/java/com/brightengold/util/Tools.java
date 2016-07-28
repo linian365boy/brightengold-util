@@ -17,8 +17,9 @@ import org.slf4j.LoggerFactory;
 
 public class Tools {
 	//创建日期格式
-	private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	private static SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static SimpleDateFormat df = new SimpleDateFormat(ConstantVariable.DFSTR);
+	private static SimpleDateFormat dft = new SimpleDateFormat(ConstantVariable.DFTSTR);
+	
 	private static final Logger logger = LoggerFactory.getLogger(Tools.class);
 		
 	/** 取得随机主文件名 */

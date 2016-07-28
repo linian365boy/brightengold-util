@@ -1,0 +1,16 @@
+{
+    "webConfig":[
+        {
+            "keyword":"",
+            "desciption":"网站关键字"
+        },
+        {
+            "bottom":"",
+            "desciption":"网站底部内容"
+        },
+        {
+        	"updateTime":"",
+        	"desciption":"更新时间"
+        }
+    ]
+}

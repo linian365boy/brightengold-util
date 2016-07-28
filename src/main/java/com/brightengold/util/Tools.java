@@ -1,17 +1,25 @@
 package com.brightengold.util;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Tools {
 	//创建日期格式
 	private static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	private static SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final Logger logger = LoggerFactory.getLogger(Tools.class);
 		
 	/** 取得随机主文件名 */
 	public synchronized static String getRndFilename(){
@@ -72,14 +80,65 @@ public class Tools {
 			}
 		}
     }
+	
+	/**
+	 * getJsonStrFromPath:从classpath 解析json文件，获取json串
+	 * @author tanfan 
+	 * @param path
+	 * @return 
+	 * @since JDK 1.7
+	 */
+    public static String getJsonStrFromPath(String path) {
+        BufferedReader read = null;
+        String line = null;
+        StringBuffer sb = new StringBuffer();
+        try {
+        	read = new BufferedReader(new InputStreamReader(Tools.class.getClassLoader().getResourceAsStream(path)));
+        	line=read.readLine();
+        	while(line!=null){
+        		sb.append(line);
+        		line = read.readLine();
+        	}
+        } catch (IOException e) {
+        	logger.error("getJsonStrFromPath error",e);
+        }finally{
+        	if(read!=null){
+        		try {
+					read.close();
+				} catch (IOException e) {
+					logger.error("getJsonStrFromPath read close error",e);
+				}
+        	}
+        }
+        return sb.toString();
+    }
+    
+    
+    public static boolean saveOrUpdateWebConfig(String path, String jsonStr) {
+    	boolean flag = false;
+    	BufferedWriter writer = null;
+    	try{
+    		writer = new BufferedWriter(new FileWriter(new File(Tools.class.getClassLoader().getResource(path).toURI()), false));
+    		writer.write(jsonStr);
+    		writer.flush();
+    		flag = true;
+    	}catch(IOException | URISyntaxException e){
+    		logger.error("saveOrUpdateWebConfig error",e);
+    	}finally{
+    		if(writer!=null){
+    			try {
+					writer.close();
+				} catch (IOException e) {
+					logger.error("saveOrUpdateWebConfig writer close error",e);
+				}
+    		}
+    	}
+		return flag;
+	}
     
     public static void main(String[] args) {
-    	//String s = "cfcd208495d565ef66e7dff9f98764da";
-		//System.out.println(URLEncoder.encode(convertMD5(s)));
-		//System.out.println(convertMD5(URLEncoder.encode(convertMD5(s))));
-		//System.out.println(URLDecoder.decode(convertMD5(s)));
-    	String s = "1";
-    	System.out.println(convertMD5(s));
+    	String jsonStr = Tools.getJsonStrFromPath("webConfig.json");
+    	System.out.println(jsonStr);
 	}
     
 }

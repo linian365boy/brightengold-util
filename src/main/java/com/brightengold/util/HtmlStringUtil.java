@@ -6,11 +6,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HtmlStringUtil {
-	String htmlMatch = "";
+	private static String htmlMatch = "";
 
 	// 通过递归删除html文件中的配对的html标签
 
-	public String removeMatchHtmlTag() {
+	private static String removeMatchHtmlTag() {
 		// String html="<p></p><table><tr><td></td><td></td></tr></table>";
 		Pattern p = Pattern.compile("<([a-zA-Z]+)[^<>]*>(.*?)</\\1>");
 		Matcher m = p.matcher(htmlMatch);
@@ -25,7 +25,7 @@ public class HtmlStringUtil {
 		return htmlMatch;
 	}
 
-	public String subStringHTML(String param, int length, String endWith) {
+	public static String subStringHTML(String param, int length, String endWith) {
 		StringBuffer result = new StringBuffer();
 		StringBuffer str = new StringBuffer();
 		int n = 0;
@@ -78,7 +78,7 @@ public class HtmlStringUtil {
 		// 用正则表达式取出标记
 		Pattern p = Pattern.compile("<([a-zA-Z]+)[^<>]*>");
 		Matcher m = p.matcher(temp_result);
-		List endHTML = new ArrayList();
+		List<String> endHTML = new ArrayList<>();
 		while (m.find()) {
 			endHTML.add(m.group(1));
 		}
@@ -92,8 +92,7 @@ public class HtmlStringUtil {
 	}
 
 	public static void main(String args[]) {
-		HtmlStringUtil ss = new HtmlStringUtil();
 		String param = "<html><p><p>012345</p><table><tr><td>678901</td><td>21111111111</td></tr></table></p></html>";
-		System.out.println(ss.subStringHTML(param, 15, "......"));
+		System.out.println(subStringHTML(param, 15, "......"));
 	}
 }

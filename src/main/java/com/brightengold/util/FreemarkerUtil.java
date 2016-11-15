@@ -5,12 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 public class FreemarkerUtil {
+	private final static Logger logger = LoggerFactory.getLogger(FreemarkerUtil.class);
 	public static Template getTemplate(String name) {
 		try {
 			Configuration cfg = new Configuration();
@@ -18,7 +20,7 @@ public class FreemarkerUtil {
 			Template temp = cfg.getTemplate(name);
 			return temp;
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("获取模板报错",e);
 		}
 		return null;
 	}
@@ -28,7 +30,7 @@ public class FreemarkerUtil {
 			Template temp = getTemplate(name);
 			temp.process(root, new PrintWriter(System.out));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("print 打印报错",e);
 		}
 	}
 
@@ -45,15 +47,15 @@ public class FreemarkerUtil {
 			temp.setEncoding("UTF-8");
 			temp.process(root, out);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("fprint 打印报错",e);
 		} catch (TemplateException e) {
-			e.printStackTrace();
+			logger.error("fprint 打印报错",e);
 		} finally {
 			if (out != null)
 				try {
 					out.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("fprint 打印，流关闭报错",e);
 				}
 		}
 	}

@@ -3,9 +3,9 @@ package com.brightengold.util;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,8 +82,8 @@ public class Tools {
 		}
     }
 	
-	/**
-	 * getJsonStrFromPath:从classpath 解析json文件，获取json串
+    /**
+	 * getJsonStrFromPath:从绝对路径 解析json文件，获取json串
 	 * @author tanfan 
 	 * @param path
 	 * @return 
@@ -94,7 +94,7 @@ public class Tools {
         String line = null;
         StringBuffer sb = new StringBuffer();
         try {
-        	read = new BufferedReader(new InputStreamReader(Tools.class.getClassLoader().getResourceAsStream(path)));
+        	read = new BufferedReader(new FileReader(new File(path)));
         	line=read.readLine();
         	while(line!=null){
         		sb.append(line);

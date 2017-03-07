@@ -78,7 +78,7 @@ public class HtmlStringUtil {
 		// 用正则表达式取出标记
 		Pattern p = Pattern.compile("<([a-zA-Z]+)[^<>]*>");
 		Matcher m = p.matcher(temp_result);
-		List<String> endHTML = new ArrayList<>();
+		List<String> endHTML = new ArrayList<String>();
 		while (m.find()) {
 			endHTML.add(m.group(1));
 		}
